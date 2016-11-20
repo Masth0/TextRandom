@@ -1,3 +1,5 @@
+# Work in progress
+
 # TextRandom
 TextRandom is a script (vanillaJS) for animate a word with random letters.
 Here the demo page: [**DEMO**] (https://masth0.github.io/TextRandom/)
