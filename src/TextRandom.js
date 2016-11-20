@@ -142,7 +142,7 @@ var TextRandom = (function () {
 	function TextRandom (options) {
 		_this = this;
 		this.current = 0;
-		this.changeLetters;
+		this.changeLetters = null;
 		this.letterIndexNotAssigned = [];
 	  this.letterIndexAssigned = [];
 		this.options = mergeOptions (defaults, options);
@@ -236,7 +236,8 @@ var TextRandom = (function () {
 	 * @returns {number}
 	 */
 	TextRandom.prototype.next = function () {
-		return this.current = (this.current++ < this.options.words.length - 1)? this.current++ : 0;
+		this.current = (this.current++ < this.options.words.length - 1)? this.current++ : 0;
+		return this.current;
 	};
 
 	/**
@@ -268,8 +269,8 @@ var TextRandom = (function () {
 
 		// For set final word
 		requestInterval(function () {
-			return _this.setFinalLetter(_this.options.words[_this.current], changeLetters.count);
-		}, changeLetters.interval);
+			return _this.setFinalLetter(_this.options.words[_this.current], _this.changeLetters.count);
+		}, _this.changeLetters.interval);
 	};
 
 	/**
@@ -277,19 +278,18 @@ var TextRandom = (function () {
 	 */
 	TextRandom.prototype.start = function () {
 		var _this = this;
-		changeLetters = changeNLetters(this.options.timeToSetWord, this.options.words[this.current]);
+		this.changeLetters = changeNLetters(this.options.timeToSetWord, this.options.words[this.current]);
 		this.generateSpan(this.options.words[this.current], this.options.container);
-		this.letterIndexOrder(_this.options.words[this.current], this.letterIndexNotAssigned);
+		this.letterIndexOrder(this.options.words[this.current], this.letterIndexNotAssigned);
 		this.anim();
 
 		requestInterval(function () {
 			_this.next();
-
-			if (_this.options.playOnce && current === 0) {
+			if (_this.options.playOnce && _this.current === 0) {
 				return false;
 			}
 
-			changeLetters = changeNLetters(_this.options.timeToSetWord, _this.options.words[_this.current]);
+			_this.changeLetters = changeNLetters(_this.options.timeToSetWord, _this.options.words[_this.current]);
 			_this.generateSpan(_this.options.words[_this.current], _this.options.container);
 			_this.letterIndexOrder(_this.options.words[_this.current], _this.letterIndexNotAssigned);
 			_this.anim();
