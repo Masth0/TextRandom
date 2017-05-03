@@ -5,14 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start-server": "node ./node_modules/http-server/bin/http-server -o -c-1",
-    "ugli-js": "uglifyjs ./src/Textrandom.js -o ./dist/Textrandom.min.js -c -m --comments"
+    "uglijs": "uglifyjs ./src/Textrandom.js -o ./dist/Textrandom.min.js -c -m --comments"
   },
   "author": "Masth0",
   "license": "ISC",
   "devDependencies": {
-    "http-server": "^0.9.0"
-  },
-  "dependencies": {
-    "uglify-js": "^2.7.4"
+    "http-server": "^0.9.0",
+    "uglify-js": "^2.8.22"
   }
 }

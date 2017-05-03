@@ -39,7 +39,7 @@ var TextRandom = (function () {
 		function interval () {
 			var now = +new Date;
 			var delta = now - start;
-			if (delta >= time) {
+			if (delta > time) {
 				// reset start
 				start = +new Date;
 				callbackRunning = callback.call();
@@ -51,8 +51,7 @@ var TextRandom = (function () {
 				timer = requestAnimFrame(interval);
 			}
 		}
-		timer = requestAnimFrame(interval);
-		return timer;
+		 return timer = requestAnimFrame(interval);
 	};
 
 	/**
@@ -91,13 +90,11 @@ var TextRandom = (function () {
 	var changeNLetters = function (time, word) {
 		var counter = 1;
 		var interval = (time / word.length);
-		var _interval =interval;
-		if (_interval <= 16) {
-			do {
-				_interval += interval;
-				counter++;
-			} while (_interval < 16);
-		}
+		var _interval = interval;
+    while (_interval < 16) {
+      _interval += interval;
+      counter++;
+    };
 		return {
 			interval: _interval,
 			count: counter
@@ -250,8 +247,10 @@ var TextRandom = (function () {
     var random;
     for (var i = 0; i < wordLength; i++) {
       random = mathRandom(0, wordLength);
+      //console.log('wordLength', wordLength, 'random', random, 'index', array.indexOf(random), 'array', array);
       while (array.indexOf(random) !== -1) {
         random = mathRandom(0, wordLength);
+        //console.log('je veux new random');
       }
       array.push(random);
     }
@@ -288,7 +287,7 @@ var TextRandom = (function () {
 			if (_this.options.playOnce && _this.current === 0) {
 				return false;
 			}
-
+      _this.letterIndexNotAssigned = [];
 			_this.changeLetters = changeNLetters(_this.options.timeToSetWord, _this.options.words[_this.current]);
 			_this.generateSpan(_this.options.words[_this.current], _this.options.container);
 			_this.letterIndexOrder(_this.options.words[_this.current], _this.letterIndexNotAssigned);
